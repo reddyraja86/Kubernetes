@@ -1,0 +1,45 @@
+
+Important commands for Kubernetes:
+
+To run a Pod :
+
+	kubectl run <podname> --image=<Imagename>
+  
+To run a deployment :
+
+	kubectl create deployment <name> --image=<imagename> --replicas=<no>
+
+
+
+To Taint a Node :
+	
+	kubectl taint node <nodeName> <key>=<value>:<taint-effect>
+												
+												taint-effect = NoSchedule| PreferNoSchedule | NoExecute
+	
+	ex: kubectl taint node node01 app=frontEnd:NoSchedule
+	
+To remove Taint on a Node :
+
+	Add - at the end of taint command
+    kubectl taint node <nodeName> <key>=<value>:<taint-effect>-
+	
+Add Toleration to a Pod:
+	
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    env: test
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+  tolerations:
+  - key: "key1"
+    operator: "Equal"
+	value:"value1"
+    effect: "NoSchedule"
+	
