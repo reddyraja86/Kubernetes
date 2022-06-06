@@ -104,10 +104,24 @@ spec:
 	
 
 DaemonSets :
-  This will be create a pod when a new node is created.
+
+	This will be create a pod when a new node is created.
+	
+	To get the daemon set
+	Ex: kubectl get daemonset;
+	
+	To create a daemon set ( this is like creating a replicaset)  excpet the type is DaemonSet
   
-  apiVersion: apps/v1
-  kind: DaemonSet
-  metadata:
-   name: fluentd-elasticsearch
+	apiVersion: apps/v1
+	kind: DaemonSet
+	metadata:
+		name: fluentd-elasticsearch
    
+	
+Static pods :
+
+	Kubelet will store the pod definiton file in --pod-manifestpath="etc/kubernets/manifests" folder or --condif prop.
+	This directory is passed as an argument while creating the kublet service.
+	Placing pod definiton file here will allow the kubelet to create the pod.
+	
+	
