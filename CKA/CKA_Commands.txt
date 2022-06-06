@@ -124,4 +124,33 @@ Static pods :
 	This directory is passed as an argument while creating the kublet service.
 	Placing pod definiton file here will allow the kubelet to create the pod.
 	
+	find the static pods in all namespaces
+	 kubectl get pods -A ( find the pods  name which ends with naode name etc)
+	 or 
+	 check the owner section in pod yaml where owner reference kind=node
+	   ownerReferences:
+		  - apiVersion: v1
+			controller: true
+			kind: Node
+			name: controlplane
+			
+	for non static pods kind: ReplicaSet
+	 ownerReferences:
+	  - apiVersion: apps/v1
+		blockOwnerDeletion: true
+		controller: true
+		kind: ReplicaSet
+			
+	How many pod definition files are present in the manifests folder?
+	
+	cd /etc/kubernetes/manifests ➜  ls
+	etcd.yaml  kube-apiserver.yaml  kube-controller-manager.yaml  kube-scheduler.yaml
+	
+	ssh to the node on which pods is avialble
+	Satic pods exists at /etc/kubernetes/manifests 
+	
+	If not availble check the config file in  “var/lib/kublet/config.yaml” and check the static pod path 
+	staticPodPath: /etc/just-to-mess-with-you
+	
+	
 	
