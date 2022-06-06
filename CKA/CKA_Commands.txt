@@ -43,3 +43,71 @@ spec:
 	value:"value1"
     effect: "NoSchedule"
 	
+
+ Problem with taint and tolerations is it doesnot guarantee that the pod will be placed on a specific node.
+ 
+ Placing pod on a specific Node :
+ 
+ 1)Using Node name :
+	Using "nodeName" in pod  spec tag.
+ 
+ 2) Using Node Selectors : For this we need to label the nodes.
+	
+	Creating labels for a Node
+	
+	kubectl label node <NodeName> <key>=<value>
+	Ex: kubectl label nodes node-1 size=Large
+	
+	Using Node selector in a pod
+	
+	apiVersion	: V1
+	kind : Pod
+	metadata:
+	 name:myapp-pod
+	spec:
+	 nodeSelector :
+		size:Large
+		
+	Limitaion with node selector we can add only one condition .We cannot multiple conditions add like size: large or size:medium
+
+3) Using Node Affinity : 
+	Creating labels for a Node
+	
+	kubectl label node <NodeName> <key>=<value>
+	Ex: kubectl label nodes node-1 size=Large
+	
+	
+	Add node Affinity
+	==================
+	apiVersion: v1
+	kind: Pod
+	metadata:
+		name: with-node-affinity
+	spec:
+	 containers:
+	  - name: nginx
+	    image: nginx 
+	 affinity:
+	  nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: size
+              operator: In
+              values:
+              - Large
+			  - medium
+	
+	
+	Supported Operators:
+	In, NotIn, Exists and DoesNotExist 
+	
+
+DaemonSets :
+  This will be create a pod when a new node is created.
+  
+  apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+   name: fluentd-elasticsearch
+   
