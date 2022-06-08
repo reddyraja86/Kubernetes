@@ -152,5 +152,24 @@ Static pods :
 	If not availble check the config file in  “var/lib/kublet/config.yaml” and check the static pod path 
 	staticPodPath: /etc/just-to-mess-with-you
 	
+Configure Custom Scheduler :
+
+  If  scheduler configured using service then check the --config in service	
+  kube-scheduler.service
+  ======================
+	Default Scheduler :
+	====================
+	wget https://storage.googleapis.com/kubernetes-release/release/v1.12.0/bin/linux/amd64/kube-scheduler
+	ExecStart=/usr/local/bin/kube-scheduler \\
+	--config=/etc/kubernetes/config/kube-scheduler.yaml \\
+	--scheduler-name= default-scheduler
+	ExecStart=/usr/local/bin/kube-scheduler \\
 	
+	Custome Scheduler:
+	=================
+	--config=/etc/kubernetes/config/kube-scheduler.yaml \\
+	my-custom-scheduler.service
+	--scheduler-name= my-custom-scheduler
 	
+  If scheduler configured using static pods in static pods location change the scheduler.yaml file
+  
