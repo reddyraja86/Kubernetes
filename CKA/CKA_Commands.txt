@@ -172,4 +172,33 @@ Configure Custom Scheduler :
 	--scheduler-name= my-custom-scheduler
 	
   If scheduler configured using static pods in static pods location change the scheduler.yaml file
+
+
+Metrics  :
+
+  Install metrics server to get the node/pod metrics.
   
+  Minikube : minikube addons enable metrics-server
+  Other clusters : 
+	git clone https://github.com/kubernetes-incubator/metrics-server.git
+	kubectl create –f deploy/1.8+/
+		others
+		clusterrolebinding "metrics-server:system:auth-delegator" created
+		rolebinding "metrics-server-auth-reader" created
+		apiservice "v1beta1.metrics.k8s.io" created
+		serviceaccount "metrics-server" created
+		deployment "metrics-server" created
+		service "metrics-server" created
+		clusterrole "system:metrics-server" created
+		clusterrolebinding "system:metrics-server" created
+		
+		
+  Node metrics : kubectl top node
+  Pod metrics : kubectl top pod
+  
+  logs : 
+  
+	Display logs in a container
+	
+	kubectl logs –f  <POD_NAME> <CONTAINER_NAME>
+	kubectl logs –f event-simulator-pod event-simulator
