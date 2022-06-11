@@ -210,7 +210,7 @@ Deployment Strategies :
 	
 	Every deployment will have rollouts and versions
 	
-	>kubectl rollout status deployment/ myapp-deployment
+	>kubectl rollout status deployment/myapp-deployment
 	
 	>kubectl rollout history deployment/ myapp deployment
 	deployments "
@@ -230,14 +230,23 @@ Rolling Updates :
 	 >kubectl set image deployment/myapp_deployment nginx =nginx:1.9.1
 		
 
-	Deployement will create a replcaset with specific version
-	When a new verison is deployed a new version of replicaset is created with in deployment.
+	Deployement will create a replcaset with specific image version
+	When a new verison of image is  deployed a new version of replicaset is created with in deployment.
 
 	To rollback to prev deployment version 
 	 >kubectl rollout undo deployment/ myapp deployment
  
+	Deployment :
+    Create : kubectl create deployment nginxdeployment --image=nginx
+	Get: kubectl get deployments
+	Update : 
+			kubectl apply -f nginxdeployment.yaml
+			or
+			kubectl set image deployment/nginxdeployment <containerName>=nginx:1.9.1
+	status :
+			kubectl rollout status deployment/myapp-deployment
 	
-	
+	rollback : kubectl rollout undo deployment/myapp-deployment
 	
 	
  
