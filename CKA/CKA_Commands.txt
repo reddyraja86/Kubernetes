@@ -202,3 +202,43 @@ Metrics  :
 	
 	kubectl logs –f  <POD_NAME> <CONTAINER_NAME>
 	kubectl logs –f event-simulator-pod event-simulator
+	
+Deployment Strategies :
+
+	1) Recreate
+	2) Rolling updates - ( Default )
+	
+	Every deployment will have rollouts and versions
+	
+	>kubectl rollout status deployment/ myapp-deployment
+	
+	>kubectl rollout history deployment/ myapp deployment
+	deployments "
+	myapp deployment"
+	REVISION CHANGE
+	CAUSE
+	1 <none>
+	2 kubectl apply filename=deployment definition.yml record=true
+
+Rolling Updates :
+
+	Create deployment with nginx:1.8
+	 >kubectl create -f nginx-deployment.yaml ( nginx:1.8)
+	Change the version to nginx:1.9.1 in nginx-deployment.yaml file
+	 >kubectl apply -f nginx-deployment.yaml
+	or
+	 >kubectl set image deployment/myapp_deployment nginx =nginx:1.9.1
+		
+
+	Deployement will create a replcaset with specific version
+	When a new verison is deployed a new version of replicaset is created with in deployment.
+
+	To rollback to prev deployment version 
+	 >kubectl rollout undo deployment/ myapp deployment
+ 
+	
+	
+	
+	
+ 
+
