@@ -250,4 +250,89 @@ Rolling Updates :
 	
 	
  
+Environment Variables :
+
+	apiVersion: v1
+	kind: Pod
+	metadata:
+	  name: myapp
+	  labels:
+		name: myapp
+	spec:
+	  containers:
+		- name: myapp
+		  image: nginx
+		  resources:
+			limits:
+			  memory: "128Mi"
+			  cpu: "500m"
+		  ports:
+			- containerPort: 8080
+		  env:
+			- name: APP_COLOR
+			  value: blue
+			- name: APP_MODE
+			  value: production
+			- name: myConfigMap
+			  valueFrom:
+				configMapKeyRef:
+				  key: APP_LANG
+				  
+
+ConfigMaps :
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myConfigMap
+data:
+  APP_COLOR: blue
+  APP_MODE: production
+  APP_LANG: Java
+  
+ Creation :
+ > kubectl create -f congimp.yaml
+ or 
+ >kubectl create configmap <configmap-name>  --from-literal=<key>=<value>
+ 
+ Using configmap in pod :
+	apiVersion: v1
+	kind: Pod
+	metadata:
+	  name: confiPod
+	  labels:
+		name: confiPod
+	spec:
+	  containers:
+		- name: confiPod
+		  image: nginx
+		  resources:
+			limits:
+			  memory: "128Mi"
+			  cpu: "500m"
+		  ports:
+			- containerPort: 8080
+		  envFrom:
+			- configMapRef:
+				name: myConfigMap
+
+
+ConfigMaps in Pods :
+
+Environment :
+=============
+envFrom:
+- configMapRef:
+	name: app-config
+	
+Single env variable :
+=====================
+
+env:
+- name: APP_COLOR
+  valueFrom:
+	configMapKeyRef:
+	 name: app-config
+	 key: APP_COLOR
+	 
 
