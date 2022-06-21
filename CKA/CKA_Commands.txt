@@ -336,3 +336,56 @@ env:
 	 key: APP_COLOR
 	 
 
+
+Secrets:
+=======
+
+ Secrets are stored in encoded format
+ 
+ Two steps
+ 1) create Secret
+	- Declarative Approach
+	- Imperative Approach
+ 2) Inject secret in to POD
+	- Injecting the entire configMap
+	- Injecting specific key from configMap
+
+1) create Secret :
+================ 
+ Declarative :
+ ===========
+	apiVersion: v1
+	kind: Secret
+	metadata:
+	  name: mysecret
+	data:
+	  USER_NAME: mysql
+	  PASSWORD: password
+	  HOST: localhost
+	  
+ Imperative :
+ ===========
+	>kubectlcreate secret generic <secret-name> --from-literal=<key>=<value>
+	>kubectl create secret generic app-secret --from-literal=DB_Host=mysql --from-literal=DB_User=root
+	secrets from a file :
+	====================
+    >kubectl create secret generic <secret-name> --from-file=<path-to-file> 
+	>kubectl create secret generic app-secret --from-file=app_secret.properties 
+
+
+2) Inject secret in to POD
+==========================
+	Injecting the entire configMap
+	==============================
+	envFrom:
+	  - secretRef:
+          name: app config
+	
+	Injecting specific key from configMap
+	=====================================
+	env:
+	 - name: DB_Password
+       valueFrom:
+         secretKeyRef:
+            name: app secret
+            key: DB_Password
