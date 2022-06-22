@@ -410,3 +410,25 @@ spec:
   - name: init-myservice
     image: busybox:1.28
     command: ['sh', '-c', 'until nslookup myservice; do echo waiting for myservice; sleep 2; done;']
+
+
+
+Cluster Maintainance :
+======================
+
+As part of cluseter maintainance node has to stopped for software upgrade.
+
+To move all the pods on the node to another node.
+
+Drain pods from Node:
+=====================
+>kubectl drain <NodeName>
+
+Not to Schedule pods on node :
+==============================
+>kubectl cordon <NodeName>
+
+Reschede pods on cordon Node:
+=============================
+>kubectl uncordon <NodeName>
+
