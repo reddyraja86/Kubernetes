@@ -416,7 +416,7 @@ spec:
 Cluster Maintainance :
 ======================
 
-As part of cluseter maintainance node has to stopped for software upgrade.
+As part of cluseter maintainance like patching node has to stopped for software upgrade.
 
 To move all the pods on the node to another node.
 
@@ -431,4 +431,39 @@ Not to Schedule pods on node :
 Reschede pods on cordon Node:
 =============================
 >kubectl uncordon <NodeName>
+
+
+
+Upgrading Kubernetes Cluster :
+==============================
+Upgrading cluster involves two steps
+1) Upgrading the master Node
+2) Upgrading the worker Node
+
+
+Show the complete plan to upgrade cluster 
+	>kubeadm upgrade plan
+
+1) upgrade the kubeadm command tool 
+	>apt-get upgrade -y kubeadm=<version>
+2) upgrade cluster 
+	>kubeadm upgrade apply <version>
+3) upgrade the kublet  
+	>apt-get upgrade -y kubelet=<version>
+4) Restart the kubelet service
+	>systemctl restart kubelet
+5) Upgade worker nodes
+6) Drain the nodes on one of the worker nodes
+	>kubectl drain <NodeName>
+7) upgrade the kubeadm command tool 
+	>apt-get upgrade -y kubeadm=<version>
+8) upgrade the kubelet 
+	>apt-get upgrade y kubelet=1.12.0 00
+9) upgrade node 
+	>kubeadm upgrade node config --kubelet-version v1.12.0
+10) restart kubelet
+	>systemctl restart kubelet
+11) Uncordon
+	>kubectl uncordon <NodeName>
+	
 
