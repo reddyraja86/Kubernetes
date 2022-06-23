@@ -467,3 +467,16 @@ Show the complete plan to upgrade cluster
 	>kubectl uncordon <NodeName>
 	
 
+Backup the ETCD:
+================
+
+Backup
+
+>ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379  --cacert=<trusted-ca-file> --cert=<cert-file> --key=<key-file>  snapshot save <backup-file-location>
+
+Restore
+
+
+
+
+
