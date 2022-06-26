@@ -183,7 +183,7 @@ Static pods :
 	ssh to the node on which pods is avialble
 	Satic pods exists at /etc/kubernetes/manifests 
 	
-	If not availble check the config file in  “var/lib/kublet/config.yaml” and check the static pod path 
+	**If not availble check the config file in  “var/lib/kublet/config.yaml” and check the static pod path 
 	staticPodPath: /etc/just-to-mess-with-you
 	
 Configure Custom Scheduler :
