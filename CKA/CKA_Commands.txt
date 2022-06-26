@@ -3,43 +3,59 @@ Important commands for Kubernetes:
 
 To run a Pod :
 
-	kubectl run <podname> --image=<Imagename>
+	>kubectl run <podname> --image=<Imagename>
   
 To run a deployment :
 
-	kubectl create deployment <name> --image=<imagename> --replicas=<no>
+	>kubectl create deployment <name> --image=<imagename> --replicas=<no>
 
 Expose deployment on a port
 
-	kubectl expose deployment nginx --port 80
+	>kubectl expose deployment nginx --port 80
 	
 Edit deployment
 
-	kubectl edit deployment <name>
+	>kubectl edit deployment <name>
 	
 Scale deployment
 
-	kubectl scale deployment <name> --replicas=4
+	>kubectl scale deployment <name> --replicas=4
 	
 update the Image
 
-	kubectl set Image deployment <name> <oldImage>=<image>
+	>kubectl set Image deployment <name> <continerName>=<image>
+
+Service :
+=========
+
+Create a clusterip service
+	
+	>kubectl create service clusterip <serviceName> --tcp=<hostport>:<port>
+	
+	ex: kubectl create service clusterip redis-service --tcp=6379:6379 --dry-run=client -o yaml> redis-service.yaml
+
+Selectors :
+===========
+>kubectl get pods --selector env=dev
+>kubectl get pods --selector 'bu=finance,tier=frontend,env=prod’
 
 
 To Taint a Node :
-	
-	kubectl taint node <nodeName> <key>=<value>:<taint-effect>
+=================
+	>kubectl taint node <nodeName> <key>=<value>:<taint-effect>
 												
 												taint-effect = NoSchedule| PreferNoSchedule | NoExecute
 	
 	ex: kubectl taint node node01 app=frontEnd:NoSchedule
 	
 To remove Taint on a Node :
+===========================
 
 	Add - at the end of taint command
     kubectl taint node <nodeName> <key>=<value>:<taint-effect>-
 	
 Add Toleration to a Pod:
+=======================
 	
 apiVersion: v1
 kind: Pod
@@ -62,6 +78,7 @@ spec:
  Problem with taint and tolerations is it doesnot guarantee that the pod will be placed on a specific node.
  
  Placing pod on a specific Node :
+ ================================
  
  1)Using Node name :
 	Using "nodeName" in pod  spec tag.
@@ -70,7 +87,7 @@ spec:
 	
 	Creating labels for a Node
 	
-	kubectl label node <NodeName> <key>=<value>
+	>kubectl label node <NodeName> <key>=<value>
 	Ex: kubectl label nodes node-1 size=Large
 	
 	Using Node selector in a pod
@@ -119,6 +136,7 @@ spec:
 	
 
 DaemonSets :
+============
 
 	This will be create a pod when a new node is created.
 	
@@ -134,8 +152,9 @@ DaemonSets :
    
 	
 Static pods :
+============
 
-	Kubelet will store the pod definiton file in --pod-manifestpath="etc/kubernets/manifests" folder or --condif prop.
+	Kubelet will store the pod definiton file in --pod-manifestpath="etc/kubernets/manifests" folder or --config prop.
 	This directory is passed as an argument while creating the kublet service.
 	Placing pod definiton file here will allow the kubelet to create the pod.
 	
@@ -168,7 +187,7 @@ Static pods :
 	staticPodPath: /etc/just-to-mess-with-you
 	
 Configure Custom Scheduler :
-
+===========================
   If  scheduler configured using service then check the --config in service	
   kube-scheduler.service
   ======================
@@ -190,6 +209,7 @@ Configure Custom Scheduler :
 
 
 Metrics  :
+==========
 
   Install metrics server to get the node/pod metrics.
   
