@@ -9,6 +9,21 @@ To run a deployment :
 
 	kubectl create deployment <name> --image=<imagename> --replicas=<no>
 
+Expose deployment on a port
+
+	kubectl expose deployment nginx --port 80
+	
+Edit deployment
+
+	kubectl edit deployment <name>
+	
+Scale deployment
+
+	kubectl scale deployment <name> --replicas=4
+	
+update the Image
+
+	kubectl set Image deployment <name> <oldImage>=<image>
 
 
 To Taint a Node :
