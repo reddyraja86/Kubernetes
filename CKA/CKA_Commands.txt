@@ -513,5 +513,26 @@ Restore
 
 
 
+Security :
+===========
 
+Who can access the Kubernetes Cluster :
+=======================================
+1) Users 
+2) Bots ( like CI/CD etc)
+
+How to access Kubernetes Cluster:
+=================================
+
+Users :
+=======
+All user access is managed by kube-api server Using kubectl/Using rest api),Kube-api server will take care of authenticating the user request using the following types
+1) Static Password File
+2) Static Token files
+3) Certificates
+4) Thridparty ( LDAP)
+
+	
+	
+	
 
