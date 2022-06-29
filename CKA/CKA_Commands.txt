@@ -527,12 +527,65 @@ How to access Kubernetes Cluster:
 Users :
 =======
 All user access is managed by kube-api server Using kubectl/Using rest api),Kube-api server will take care of authenticating the user request using the following types
-1) Static Password File
-2) Static Token files
-3) Certificates
+1) Static Password File ( Deprecated)
+2) Static Token files ( Deprecated)
+3) Certificates 
 4) Thridparty ( LDAP)
 
+1) Static Password files:
+==========================
+	1) Create a static password file
+
+		User-details.csv
+		============
+		password123 user2 u0002
+		password123 user3 u0003
+		password123 user4 u0004
+		password123 user5 u0005
 	
+	2) Injecting to kube-api server
+		1)Kube-api server as a service
+			kube-apiserver  --basic-auth-file=User-details.csv
+		2)kube-api server as a static pod
+			apiVersion: v1
+			kind: Pod
+			metadata:
+				creationTimestamp : null
+				name: kube apiserver
+				namespace: kube system
+			spec:
+				containers:
+				 - command:
+			     - kube apiserver
+				 - --basic-auth-file=User-details.csv
+			image: k8s.gcr.io/kube apiserver amd64:v1.11.3
+			name: kube apiserver
+		
+			
+2) Static Token files
+
+		1) Create a static token file
+			user-token-details.csv
+			=======================
+			KpjCVbI7rCFAHYPkByTIzRb7gu1cUc4B user10 u0010 group1
+			rJjncHmvtXHc6MlWQddhtvNyyhgTdxSC user11 u0011 group1
+			mjpOFIEiFOkL9toikaRNtt59ePtczZSq user12 u0012 group2
+			PG41IXhs7QjqwWkmBkvgGT9glOyUqZij user13 u0013 group2 
+		2) Inject in kube-apiserver using
+			-- token auth file=user details.csv
+			
+
+3) Certificates :
+
+	1) We have public key( lock ) - Extetion is .pem,.cert
+		Certificate (Public Key)
+		-------------------------
+		*.crt *.pem
+
+	2) prvate key ( for user to access) - Extetion is .key
+		Private Key
+		-------------------------
+		*.key *-key.pem
 	
 	
 
