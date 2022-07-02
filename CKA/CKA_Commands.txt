@@ -587,5 +587,11 @@ All user access is managed by kube-api server Using kubectl/Using rest api),Kube
 		-------------------------
 		*.key *-key.pem
 	
-	
+  **Exatract the certificate Details :
+  =================================  
+  
+  >openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text -noout
 
+openssl x509 -in /etc/kubernetes/pki/etcd/server.crt -text -noout
+
+openssl x509 -in /etc/kubernetes/pki/ca.crt -text -noout
