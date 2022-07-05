@@ -516,7 +516,7 @@ Restore
 Security :
 ===========
 
-Who can access the Kubernetes Cluster :
+Who can access the Kubernetes Cluster ( Authentication) :
 =======================================
 1) Users 
 2) Bots ( like CI/CD etc)
@@ -649,8 +649,53 @@ Change the context in config manually every time
 
 Autherization:
 ==============
-1)Node Autherization
+1)Node Autherization - Authentication between custer nodes
 2)ABAC
 3)RBAC 
+4)WEB HOOKS
+5)Always Allow
+6)Always Deny
 
+We can set the Autherization in kube-api server 
+--authorization-mode=Node,RBAC,Webhook \\
+
+
+RBAC :
+=====
+1) Create Role : create role and map them with kubernetes resources
+2) Create Role Bindings : Map role to user
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+ name: developer
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list“, "get", “create“, “update“, “delete"
+- apiGroups: [""]
+  resources: [“ConfigMap"]
+  verbs: [“create“]
+
+
+role binding:
+============
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: devuser-developer-binding
+subjects:
+ - kind: User
+   name: dev-user
+   apiGroup: rbac.authorization.k8s.io
+ roleRef:
+  kind: Role
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
+  
+  
+>kubectl get roles
+>kubectl get rolebindings
+>kubectl describe role developer
+>kubectl describe rolebinding devuser developer binding
 
