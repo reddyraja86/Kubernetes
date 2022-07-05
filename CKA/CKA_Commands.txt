@@ -595,3 +595,62 @@ All user access is managed by kube-api server Using kubectl/Using rest api),Kube
 openssl x509 -in /etc/kubernetes/pki/etcd/server.crt -text -noout
 
 openssl x509 -in /etc/kubernetes/pki/ca.crt -text -noout
+
+Contexts:
+=========
+
+Users and cluseter will be mapped using the contexts.
+
+This will be placed in $HOME/.kube/config
+
+			apiVersion: v1
+			kind: Config
+			current-context: ""
+			clusters:
+			- cluster:
+				certificate-authority: fake-ca-file
+				server: https://1.2.3.4
+			  name: development
+			- cluster:
+				insecure-skip-tls-verify: true
+				server: https://5.6.7.8
+			  name: test
+			contexts:
+			- context:
+				cluster: development
+				user: developer
+			  name: development@developer
+			- context:
+				cluster: test
+				user: test-developer
+			  name: test@developer
+
+			users:
+			- name: developer
+			  user:
+				client-certificate: fake-cert-file
+				client-key: fake-key-file
+			- name: test-developer
+			  user:
+				client-certificate: fake-cert-file
+				client-key: fake-key-file
+				
+We can set the context by using current-context: ""
+
+View the default context 
+>kubectl config view
+
+View a specific config
+>kubectl config  –kubeconfig=my-custom-config view
+
+Change the context in config manually every time
+>kubectl config --kubeconfig=<my-kube-config>  use-context <research>
+
+
+Autherization:
+==============
+1)Node Autherization
+2)ABAC
+3)RBAC 
+
+
