@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cms
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cms
+  template:
+    metadata:
+      labels:
+        app: cms
+    spec:
+      containers:
+      - name: cms_container
+        image: 'us-docker.pkg.dev/otl-ot2-sandbox/cms-repo/cms:latest'
+        envFrom:
+          - configMapRef:
+              name: cms_config
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cms_config
+data:
+  AUTH_URL: 'http://$(AUTHSERVICE_SERVICE_HOST):$(AUTHSERVICE_SERVICE_PORT)/authserver'
+  DB_URL: 'jdbc:p6spy:postgresql://$(POSTGRES_SERVICE_HOST):$(POSTGRES_SERVICE_PORT)/leap'
+  DB_USER_NAME: leap
+  DB_PASSWORD: leap
+  BLOB_URL: 'http://${BLOBSERVICE_SERVICE_HOST}:${BLOBSERVICE_SERVICE_PORT}'
+  CMS_URL: 'http://${CMS_SERVICE_HOST}:${CMS_SERVICE_PORT}'
+  ETS_SYNC: 'false'
+  ETS_EVENT-DATA_FORCE-PULL-ALL: 'false'
+  CMS_PRIVILEGED_CLIENT_ID: 'rps,qualification,disposition'
+  SPRING_PROFILES_ACTIVE: 'dev'
+  OAUTH2_CLIENTSCOPE: 'readwrite,transform-content,search,otds:groups'
+  OAUTH2_CLIENTSECRET: 'password'
+  SEARCH_URL: 'http://${SEARCH_SERVICE_HOST}:${SEARCH_SERVICE_PORT}'
+  SPRING_REDIS_HOST: 'http://${REDIS-CLUSTER_HOST}' 
+
+---
+
+
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: cms_service
+    labels:
+      name: cms
+  spec:
+    selector:
+      app: cms
+    type: NodePort
+    ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 31642
+      
+      
+
+

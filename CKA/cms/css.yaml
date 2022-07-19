@@ -1,0 +1,400 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: 2022-06-29T00:49:41Z
+  generateName: css-2-5f974c975d-
+  labels:
+    app: css-2
+    pod-template-hash: 5f974c975d
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:generateName: {}
+        f:labels:
+          .: {}
+          f:app: {}
+          f:pod-template-hash: {}
+        f:ownerReferences:
+          .: {}
+          k:{"uid":"a30ffe64-4468-4fd7-b0dc-1be24f11a3ee"}: {}
+      f:spec:
+        f:containers:
+          k:{"name":"css-docker-image-1"}:
+            .: {}
+            f:image: {}
+            f:imagePullPolicy: {}
+            f:name: {}
+            f:resources: {}
+            f:terminationMessagePath: {}
+            f:terminationMessagePolicy: {}
+        f:dnsPolicy: {}
+        f:enableServiceLinks: {}
+        f:restartPolicy: {}
+        f:schedulerName: {}
+        f:securityContext: {}
+        f:terminationGracePeriodSeconds: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: 2022-06-29T00:49:41Z
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:conditions:
+          k:{"type":"ContainersReady"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Initialized"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Ready"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:status: {}
+            f:type: {}
+        f:containerStatuses: {}
+        f:hostIP: {}
+        f:phase: {}
+        f:podIP: {}
+        f:podIPs:
+          .: {}
+          k:{"ip":"172.16.143.6"}:
+            .: {}
+            f:ip: {}
+        f:startTime: {}
+    manager: kubelet
+    operation: Update
+    subresource: status
+    time: 2022-06-29T00:55:05Z
+  name: css-2-5f974c975d-7pl5f
+  namespace: default
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: css-2-5f974c975d
+    uid: a30ffe64-4468-4fd7-b0dc-1be24f11a3ee
+  resourceVersion: "38247036"
+  uid: e9d31796-cf23-4ad9-a4e0-1b6921cf2d44
+spec:
+  containers:
+  - image: us-east4-docker.pkg.dev/otl-ot2-sandbox/css-repo/css-docker-image:2
+    imagePullPolicy: IfNotPresent
+    name: css-docker-image-1
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-lngcx
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: gke-otl-ot2-sandbox-cluster1-primary-3e18b152-hcia
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-lngcx
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: 2022-06-29T00:49:41Z
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: 2022-06-29T00:55:05Z
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: 2022-06-29T00:55:05Z
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: 2022-06-29T00:49:41Z
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://bf5c1079a1c90cbd712399050c96e4fc70b1c4d593dc6129265327342b335846
+    image: us-east4-docker.pkg.dev/otl-ot2-sandbox/css-repo/css-docker-image:2
+    imageID: docker-pullable://us-east4-docker.pkg.dev/otl-ot2-sandbox/css-repo/css-docker-image@sha256:0cb5524e67362fe90f0df14caf5ec136ff7e17a4eaf0bee5ffa8b029431ad64f
+    lastState:
+      terminated:
+        containerID: docker://ab9025a3f58708a808ba18fbca5f0fa4a8a6fb99ca5fe629d9be7a82fe4203c4
+        exitCode: 1
+        finishedAt: 2022-06-29T00:53:38Z
+        reason: Error
+        startedAt: 2022-06-29T00:53:24Z
+    name: css-docker-image-1
+    ready: true
+    restartCount: 5
+    started: true
+    state:
+      running:
+        startedAt: 2022-06-29T00:55:05Z
+  hostIP: 10.226.72.31
+  phase: Running
+  podIP: 172.16.143.6
+  podIPs:
+  - ip: 172.16.143.6
+  qosClass: BestEffort
+  startTime: 2022-06-29T00:49:41Z
+
+---
+
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: 2022-06-23T17:13:57Z
+  generation: 1
+  labels:
+    app: css-2
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:progressDeadlineSeconds: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:app: {}
+          f:spec:
+            f:containers:
+              k:{"name":"css-docker-image-1"}:
+                .: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+    manager: GoogleCloudConsole
+    operation: Update
+    time: 2022-06-23T17:13:57Z
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    subresource: status
+    time: 2022-06-29T00:55:25Z
+  name: css-2
+  namespace: default
+  resourceVersion: "38247390"
+  uid: c8fa7b76-87f5-48e5-a2cf-776522e492f0
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: css-2
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: css-2
+    spec:
+      containers:
+      - image: us-east4-docker.pkg.dev/otl-ot2-sandbox/css-repo/css-docker-image:2
+        imagePullPolicy: IfNotPresent
+        name: css-docker-image-1
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 3
+  conditions:
+  - lastTransitionTime: 2022-06-23T17:13:57Z
+    lastUpdateTime: 2022-06-23T17:14:16Z
+    message: ReplicaSet "css-2-5f974c975d" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: 2022-06-29T00:55:25Z
+    lastUpdateTime: 2022-06-29T00:55:25Z
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 1
+  readyReplicas: 3
+  replicas: 3
+  updatedReplicas: 3
+
+---
+
+
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: 2022-06-23T20:46:09Z
+  labels:
+    app: css-2
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:internalTrafficPolicy: {}
+        f:ports:
+          .: {}
+          k:{"port":80,"protocol":"TCP"}:
+            .: {}
+            f:port: {}
+            f:protocol: {}
+        f:selector: {}
+        f:sessionAffinity: {}
+        f:type: {}
+    manager: GoogleCloudConsole
+    operation: Update
+    time: 2022-06-23T20:46:09Z
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:ports:
+          k:{"port":80,"protocol":"TCP"}:
+            f:targetPort: {}
+    manager: kubectl-patch
+    operation: Update
+    time: 2022-06-23T21:23:27Z
+  name: css-2-service
+  namespace: default
+  resourceVersion: "33792840"
+  uid: f8cae2de-aaa1-4e08-bcf5-6def9b64fa5a
+spec:
+  clusterIP: 100.126.41.195
+  clusterIPs:
+  - 100.126.41.195
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8081
+  selector:
+    app: css-2
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

@@ -530,7 +530,7 @@ All user access is managed by kube-api server Using kubectl/Using rest api),Kube
 1) Static Password File ( Deprecated)
 2) Static Token files ( Deprecated)
 3) Certificates 
-4) Thridparty ( LDAP)
+4) Thridparty ( LDAP )
 
 1) Static Password files:
 ==========================
@@ -699,3 +699,76 @@ subjects:
 >kubectl describe role developer
 >kubectl describe rolebinding devuser developer binding
 
+>kubectl auth can-i create deployments
+no
+>kubectl auth can-i delete nodes
+no
+>kubectl auth can-i create deployments --as dev-user
+yes
+>kubectl auth can-i create pods --as dev-user
+no
+>kubectl auth can-i create pods --as dev-user --namespace test
+
+
+Cluster Roles :
+================
+
+This is to access the entire cluster 
+
+Cluster Role : Create a cluster role and assign k8 services
+Clustere Role bindings : Assign user to the cluster role.
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+name: cluster-administrator
+rules:
+- apiGroups: [""]
+resources: [“nodes"]
+verbs: ["list“, "get", “create“, “delete"]
+
+
+Service Accounts:
+===============
+
+These are used to Access K8s cluster by other apps
+
+Once we create service account k8s will crate a service coount and secret object to store the password token.
+
+Create a service Account
+>kubectl create serviceaccount <Name>
+
+Get service account
+>kubectl get serviceaccount
+
+> kubectl describe serviceaccount <Name>
+
+>kubectl describe token <serviceaccount-token>
+
+Add service account to pod 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  serviceAccountName: build-robot
+
+
+Security Context:
+
+Run with a specific user
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-pod
+spec:
+  securityContext:
+    runAsUser: 1001
+  containers:
+  -  image: ubuntu
+     name: web
+     command: ["sleep", "5000"]
+     securityContext:
+      runAsUser: 1002
