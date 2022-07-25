@@ -812,3 +812,65 @@ spec:
       ports:
         - protocol: TCP
           port: 5978
+		  
+		  
+Storage :
+=========
+
+Volumes are used to persist the container data in case of pod/container is crashed.
+
+storage solutions : These are the persistent storages created on different thridparty services.
+=================
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-ebs
+spec:
+  containers:
+  - image: k8s.gcr.io/test-webserver
+    name: test-container
+    volumeMounts:
+    - mountPath: /test-ebs
+      name: test-volume
+  volumes:
+  - name: test-volume
+    # This AWS EBS volume must already exist.
+    awsElasticBlockStore:
+      volumeID: "<volume id>"
+      fsType: ext4
+	  
+
+Peristent Volumes :
+==================
+	 PersistentVolume (PV) is a piece of storage in the cluster that has been provisioned by an administrator.
+	 
+PersistentVolume Claims :
+========================
+	Pods will claim storage from PV.
+
+Lables and selectors are used to bind the volumes and claims.
+
+Using PVC in a pods:
+====================
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+    - name: myfrontend
+      image: nginx
+      volumeMounts:
+      - mountPath: "/var/www/html"
+        name: mypd
+  volumes:
+    - name: mypd
+      persistentVolumeClaim:
+        claimName: myclaim
+		
+Storage Classes:
+===============
+To create the PV on GCP/AWS,first we need to create the volument on GCP and then we need to use that volume name in PV.
+To automate this storage classes are used.
+
+
